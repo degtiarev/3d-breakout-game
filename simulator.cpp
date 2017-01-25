@@ -1,20 +1,6 @@
 #include "simulator.h"
 
-void SimulationController::add(Dynsphere * const sphere)
-{
-    _dspheres.push_back(sphere);
-}
 
-void SimulationController::add(Plane * const plane)
-{
-    _planes.push_back(plane);
-}
-
-void SimulationController::localSimulate(double dt)
-{
-
-    //algorithm
-}
 
 Simulator::Simulator(GMlib::Scene &scene) : _scene{scene} {}
 
@@ -22,7 +8,7 @@ Simulator::Simulator(GMlib::Scene &scene) : _scene{scene} {}
 void Simulator::setupSimulator()
 {
     _dspheres.push_back(std::make_unique<Dynsphere>());
-    _dspheres.back()->velocity=GMlib::Vector<float,3> (1.0f, 1.0f, 0.0f);
+    _dspheres.back()->velocity=GMlib::Vector<double,3> (1.0f, 1.0f, 0.0f);
 
     _planes.push_back(std::make_unique<Plane>
                       (GMlib::Point<float,3>(-10.0f, -10.0f, 5.0f),
@@ -44,6 +30,31 @@ void Simulator::setupSimulator()
                       (GMlib::Point<float,3>(-10.0f, 10.0f, 5.0f),
                        GMlib::Vector<float,3>(0.0f, -20.0f, 0.0f),
                        GMlib::Vector<float,3>(0.0f, 0.0f, -5.0f)));
+
+
+_scene.insert(&_controller);
+
+
+//    _planes.push_back(std::make_unique<Plane>
+//                      (GMlib::Point<float,3>(-10.0f, -10.0f, 20.0f),
+//                       GMlib::Vector<float,3>(20.0f, 0.0f, 0.0f),
+//                       GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
+
+
+//    _planes.push_back(std::make_unique<Plane>
+//                      (GMlib::Point<float,3>(10.0f, -10.0f, 20.0f),
+//                       GMlib::Vector<float,3>(0.0f, 20.0f, 0.0f),
+//                       GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
+
+//    _planes.push_back(std::make_unique<Plane>
+//                      (GMlib::Point<float,3>(10.0f, 10.0f, 20.0f),
+//                       GMlib::Vector<float,3>(-20.0f, 0.0f, 0.0f),
+//                       GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
+
+//    _planes.push_back(std::make_unique<Plane>
+//                      (GMlib::Point<float,3>(-10.0f, 10.0f, 20.0f),
+//                       GMlib::Vector<float,3>(0.0f, -20.0f, 0.0f),
+//                       GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
 
 
     for (const auto& sphere : _dspheres)

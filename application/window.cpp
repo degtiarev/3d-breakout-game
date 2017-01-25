@@ -16,7 +16,7 @@ Window::Window(QWindow *parent) : QQuickView(parent) {
   setPersistentSceneGraph(true);
 
   setResizeMode(SizeRootObjectToView);
-  setMinimumSize( QSize( 800, 600 ) );
+  setMinimumSize( QSize( 1024, 768 ) );
 
 
   QSurfaceFormat format;

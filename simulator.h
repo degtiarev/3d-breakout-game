@@ -2,10 +2,8 @@
 #define SIMULATOR_H
 
 #include <collision_library.h>
-
-
 #include <gmParametricsModule>
-//#include <vector>
+#include <vector>
 
 using Dynsphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;
 using Plane = collision::StaticPhysObject<GMlib::PPlane<float>>;
@@ -15,25 +13,25 @@ using DynSpherePtrVector = std::vector<std::unique_ptr<Dynsphere>>;
 using PlanePtrVector = std::vector<std::unique_ptr<Plane>>;
 
 
-class SimulationController : public GMlib::SceneObject
-{
-    GM_SCENEOBJECT (SimulationController)
-    public:
-        SimulationController()=default;
+//class SimulationController : public GMlib::SceneObject
+//{
+//    GM_SCENEOBJECT (SimulationController)
+//    public:
+//        SimulationController()=default;
 
-    void add(Dynsphere* const sphere);
-    void add(Plane* const plane);
+//    void add(Dynsphere* const sphere);
+//    void add(Plane* const plane);
 
 
-protected:
-    void localSimulate(double dt) override final;
+//protected:
+//    void localSimulate(double dt) override final;
 
-private:
+//private:
 
-  PlaneVector _planes;
-    DynSphereVector _dspheres;
+//  PlaneVector _planes;
+//    DynSphereVector _dspheres;
 
-};
+//};
 
 
 
@@ -47,7 +45,7 @@ public:
 private:
 
     GMlib::Scene& _scene;
-    SimulationController _controller;
+    collision::MyController _controller;
 
         PlanePtrVector _planes;
          DynSpherePtrVector _dspheres;

@@ -138,6 +138,7 @@ set( HDRS
   application/window.h
   application/utils.h
 
+  cube.h
   testtorus.h
   simulator.h
   scenario.h
@@ -160,6 +161,7 @@ set( SRCS
   application/guiapplication.cpp
   application/window.cpp
 
+  cube.cpp
   application/main.cpp
   simulator.cpp
   scenario.cpp
