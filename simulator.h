@@ -47,8 +47,8 @@ private:
     GMlib::Scene& _scene;
     collision::MyController _controller;
 
-        PlanePtrVector _planes;
-         DynSpherePtrVector _dspheres;
+    PlanePtrVector _planes;
+    DynSpherePtrVector _dspheres;
 
 
     template<typename T>
