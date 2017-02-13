@@ -4,6 +4,7 @@
 #include <collision_library.h>
 #include <gmParametricsModule>
 #include <vector>
+#include "femobject.h"
 
 using Dynsphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;
 using Plane = collision::StaticPhysObject<GMlib::PPlane<float>>;
@@ -39,8 +40,11 @@ class Simulator{
 public:
     explicit Simulator (GMlib::Scene& scene );
 
+    void SimulateReplotSim();
     void setupSimulator();
 
+    Femobject * myFemObject1;
+    Femobject * myFemObject2;
 
 private:
 

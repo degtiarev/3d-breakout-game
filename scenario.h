@@ -20,6 +20,7 @@ public:
   void    initializeScenario() override;
   void    cleanupScenario() override;
 
+  void SimulateReplot();
 
 private: std::shared_ptr <Simulator> _simulator;
 

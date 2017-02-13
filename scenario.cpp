@@ -90,3 +90,8 @@ _simulator->setupSimulator();
 void Scenario::cleanupScenario() {
 
 }
+
+void Scenario::SimulateReplot()
+{
+    _simulator->SimulateReplotSim();
+}

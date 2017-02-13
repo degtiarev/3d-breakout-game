@@ -45,6 +45,8 @@ signals:
 
 private:
   static std::unique_ptr<GuiApplication>      _instance;
+  void reploteSimulate();
+
 public:
   static const GuiApplication&                instance();
 };
