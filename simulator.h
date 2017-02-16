@@ -4,13 +4,15 @@
 #include <collision_library.h>
 #include <gmParametricsModule>
 #include <vector>
+#include "cube.h"
 
-using Dynsphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;
+//helper types
+using DynSphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;
 using Plane = collision::StaticPhysObject<GMlib::PPlane<float>>;
-using DynSphereVector = std::vector<Dynsphere* >;
-using PlaneVector = std::vector<Plane* >;
-using DynSpherePtrVector = std::vector<std::unique_ptr<Dynsphere>>;
-using PlanePtrVector = std::vector<std::unique_ptr<Plane>>;
+using DynSpherePtrVector = std::vector<DynSphere*>; //raw pointer
+using PlanePtrVector =  std::vector<Plane*>;        //raw pointer
+using DynSphereVector = std::vector<std::unique_ptr<DynSphere>>;
+using PlaneVector =  std::vector<std::unique_ptr<Plane>>;
 
 
 //class SimulationController : public GMlib::SceneObject
@@ -45,10 +47,9 @@ public:
 private:
 
     GMlib::Scene& _scene;
-    collision::MyController _controller;
-
-    PlanePtrVector _planes;
-    DynSpherePtrVector _dspheres;
+    collision::collision_controller   _controller;
+    PlaneVector _planes;
+    DynSphereVector _dspheres;
 
 
     template<typename T>

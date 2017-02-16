@@ -13,12 +13,12 @@ class Simulator;
 
 
 class Scenario : public GMlibWrapper {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  using GMlibWrapper::GMlibWrapper;
+    using GMlibWrapper::GMlibWrapper;
 
-  void    initializeScenario() override;
-  void    cleanupScenario() override;
+    void    initializeScenario() override;
+    void    cleanupScenario() override;
 
 
 private: std::shared_ptr <Simulator> _simulator;
