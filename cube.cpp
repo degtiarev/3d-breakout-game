@@ -18,11 +18,13 @@ Cube::Cube(double x, double y, double z)
              GMlib::Vector<float,3>(0.0f, -20.0f, 0.0f),
              GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f));
 
+
     planes.push_back(pPlane);
-
-
+    planes[0]->toggleDefaultVisualizer();
     // for (auto i=0; i<planes.size(); i++)
     planes[0]->replot();
+    this->insert(planes[0]);
+    setSurroundingSphere(planes[0]->getSurroundingSphere());
 
 }
 

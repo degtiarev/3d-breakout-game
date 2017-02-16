@@ -37,6 +37,7 @@ void Scenario::initializeScenario() {
 
     // Projection cam
     auto proj_rcpair = createRCPair("Projection");
+    proj_rcpair.camera->enableCulling(false);
     proj_rcpair.camera->set(init_cam_pos,init_cam_dir,init_cam_up);
     proj_rcpair.camera->setCuttingPlanes( 1.0f, 8000.0f );
     proj_rcpair.camera->rotateGlobal( GMlib::Angle(-45), GMlib::Vector<float,3>( 1.0f, 0.0f, 0.0f ) );
@@ -46,6 +47,7 @@ void Scenario::initializeScenario() {
 
     // Front cam
     auto front_rcpair = createRCPair("Front");
+    front_rcpair.camera->enableCulling(false);
     front_rcpair.camera->set( init_cam_pos + GMlib::Vector<float,3>( 0.0f, -50.0f, 0.0f ), init_cam_dir, init_cam_up );
     front_rcpair.camera->setCuttingPlanes( 1.0f, 8000.0f );
     scene()->insertCamera( front_rcpair.camera.get() );
@@ -53,6 +55,7 @@ void Scenario::initializeScenario() {
 
     // Side cam
     auto side_rcpair = createRCPair("Side");
+    side_rcpair.camera->enableCulling(false);
     side_rcpair.camera->set( init_cam_pos + GMlib::Vector<float,3>( -50.0f, 0.0f, 0.0f ), GMlib::Vector<float,3>( 1.0f, 0.0f, 0.0f ), init_cam_up );
     side_rcpair.camera->setCuttingPlanes( 1.0f, 8000.0f );
     scene()->insertCamera( side_rcpair.camera.get() );
@@ -60,6 +63,7 @@ void Scenario::initializeScenario() {
 
     // Top cam
     auto top_rcpair = createRCPair("Top");
+    top_rcpair.camera->enableCulling(false);
     top_rcpair.camera->set( init_cam_pos + GMlib::Vector<float,3>( 0.0f, 0.0f, 50.0f ), -init_cam_up, init_cam_dir );
     top_rcpair.camera->setCuttingPlanes( 1.0f, 8000.0f );
     scene()->insertCamera( top_rcpair.camera.get() );

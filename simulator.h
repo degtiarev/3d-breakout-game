@@ -13,6 +13,7 @@ using DynSpherePtrVector = std::vector<DynSphere*>; //raw pointer
 using PlanePtrVector =  std::vector<Plane*>;        //raw pointer
 using DynSphereVector = std::vector<std::unique_ptr<DynSphere>>;
 using PlaneVector =  std::vector<std::unique_ptr<Plane>>;
+using CubeVector =  std::vector<std::unique_ptr<Cube>>;
 
 
 //class SimulationController : public GMlib::SceneObject
@@ -50,7 +51,7 @@ private:
     collision::collision_controller   _controller;
     PlaneVector _planes;
     DynSphereVector _dspheres;
-
+    CubeVector _cubes;
 
     template<typename T>
     void prepareAndInsert (const std::unique_ptr<T>& obj, int m1, int m2, int d1, int d2);
@@ -66,6 +67,12 @@ void Simulator::prepareAndInsert(const std::unique_ptr<T>& obj, int m1, int m2, 
     _scene.insert(obj.get());
     _controller.add(obj.get());
 
+}
+
+template <> inline
+void Simulator::prepareAndInsert<Cube>(const std::unique_ptr<Cube>& obj, int m1, int m2, int d1, int d2)
+{
+    _scene.insert(obj.get());
 }
 
 

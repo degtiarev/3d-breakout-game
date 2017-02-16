@@ -79,37 +79,38 @@ void Simulator::setupSimulator()
 
     //  big planes  ***********************************************************
     /*        _planes.push_back(std::make_unique<Plane>
-    //                          (GMlib::Point<float,3>(-10.0f, -10.0f, 20.0f),
-    //                           GMlib::Vector<float,3>(20.0f, 0.0f, 0.0f),
-    //                           GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
+                              (GMlib::Point<float,3>(-10.0f, -10.0f, 20.0f),
+                               GMlib::Vector<float,3>(20.0f, 0.0f, 0.0f),
+                               GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
 
 
-    //        _planes.push_back(std::make_unique<Plane>
-    //                          (GMlib::Point<float,3>(10.0f, -10.0f, 20.0f),
-    //                           GMlib::Vector<float,3>(0.0f, 20.0f, 0.0f),
-    //                           GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
+            _planes.push_back(std::make_unique<Plane>
+                              (GMlib::Point<float,3>(10.0f, -10.0f, 20.0f),
+                               GMlib::Vector<float,3>(0.0f, 20.0f, 0.0f),
+                               GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
 
-    //        _planes.push_back(std::make_unique<Plane>
-    //                          (GMlib::Point<float,3>(10.0f, 10.0f, 20.0f),
-    //                           GMlib::Vector<float,3>(-20.0f, 0.0f, 0.0f),
-    //                           GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
+            _planes.push_back(std::make_unique<Plane>
+                              (GMlib::Point<float,3>(10.0f, 10.0f, 20.0f),
+                               GMlib::Vector<float,3>(-20.0f, 0.0f, 0.0f),
+                               GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
 
-    //        _planes.push_back(std::make_unique<Plane>
-    //                          (GMlib::Point<float,3>(-10.0f, 10.0f, 20.0f),
-    //                           GMlib::Vector<float,3>(0.0f, -20.0f, 0.0f),
-    //                           GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f)));
-
-
-    //        auto cube = std::make_unique< Cube>(1.0,3.3,4.4);
-
-            prepareAndInsert(cube,10,10,1,1);*/
+            _planes.push_back(std::make_unique<Plane>
+                              (GMlib::Point<float,3>(-10.0f, 10.0f, 20.0f),
+                               GMlib::Vector<float,3>(0.0f, -20.0f, 0.0f),
+                             GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f))); */
     //  ************************************************************************
 
 
-    _planes.push_back(std::make_unique<Plane>
-                      (GMlib::Point<float,3>(-10.0f, -10.0f, 0.0f),
-                       GMlib::Vector<float,3>(20.0f, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 20.0f, 0.0f)));
+
+
+    _cubes.push_back(std::make_unique< Cube>(1.0,3.3,4.4));
+    prepareAndInsert(_cubes[0],10,10,1,1);
+
+
+    //    _planes.push_back(std::make_unique<Plane>
+    //                      (GMlib::Point<float,3>(-10.0f, -10.0f, 0.0f),
+    //                       GMlib::Vector<float,3>(20.0f, 0.0f, 0.0f),
+    //                       GMlib::Vector<float,3>(0.0f, 20.0f, 0.0f)));
 
 
     //    _planes.push_back(std::make_unique<Plane>
@@ -117,10 +118,10 @@ void Simulator::setupSimulator()
     //                       GMlib::Vector<float,3>(20.0f, 0.0f, 0.0f),
     //                       GMlib::Vector<float,3>(0.0f, 20.0f, 0.0f)));
 
-    _dspheres.push_back(std::make_unique<DynSphere> ());
-    _dspheres.back()->translateGlobal(GMlib::Vector<float,3> (0.0f,0.0f, 10.0f));
-    _dspheres.back()->velocity=GMlib::Vector<double,3> (0.0f, 0.0f, -1.0f);
-    _dspheres.back()->setMaterial(GMlib::GMmaterial::chrome());
+    //    _dspheres.push_back(std::make_unique<DynSphere> ());
+    //    _dspheres.back()->translateGlobal(GMlib::Vector<float,3> (0.0f,0.0f, 10.0f));
+    //    _dspheres.back()->velocity=GMlib::Vector<double,3> (0.0f, 0.0f, -1.0f);
+    //    _dspheres.back()->setMaterial(GMlib::GMmaterial::chrome());
 
 
     for (const auto& plane : _planes)
