@@ -26,8 +26,9 @@ class Cube : public GMlib::SceneObject {
     double x;
     double y;
     double z;
+    double a;
 
-    Cube(double, double, double);
+    Cube(double, double, double, double);
     ~Cube();
 
     void create();

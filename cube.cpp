@@ -6,25 +6,54 @@ Cube::~Cube() {
 }
 
 
-Cube::Cube(double x, double y, double z)
+Cube::Cube(double x, double y, double z, double a)
 {
 
-    this->x=x;
-    this->y=y;
-    this->z=z;
+    this->x=x;//0
+    this->y=y;//0
+    this->z=z;//0
+    this->a=a;//2
 
-    auto pPlane = new GMlib::PPlane<float>
-            (GMlib::Point<float,3>(-10.0f, 10.0f, 20.0f),
-             GMlib::Vector<float,3>(0.0f, -20.0f, 0.0f),
-             GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f));
+    //south
+    planes.push_back( new GMlib::PPlane<float>
+                      (GMlib::Point<float,3>(-5.0f, -10.0f, 5.0f),
+                       GMlib::Vector<float,3>(10.0f, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
+    //east
+    planes.push_back( new GMlib::PPlane<float>
+                      (GMlib::Point<float,3>(5.0f, -10.0f, 5.0f),
+                       GMlib::Vector<float,3>(0.0f, 10.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
+    //north
+    planes.push_back( new GMlib::PPlane<float>
+                      (GMlib::Point<float,3>(5.0f, 0.0f, 5.0f),
+                       GMlib::Vector<float,3>(-10.0f, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
+    //west
+    planes.push_back( new GMlib::PPlane<float>
+                      (GMlib::Point<float,3>(-5.0f, 0.0f, 5.0f),
+                       GMlib::Vector<float,3>(0.0f, -10.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
+    //floor
+    planes.push_back( new GMlib::PPlane<float>
+                      (GMlib::Point<float,3>(-5.0f, -10.0f, -5.0f),
+                       GMlib::Vector<float,3>(10.0f, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 10.0f, 0.0f)));
+
+    //ceiling
+    planes.push_back( new GMlib::PPlane<float>
+                      (GMlib::Point<float,3>(-5.0f, -10.0f, 5.0f),
+                       GMlib::Vector<float,3>(10.0f, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 10.0f, 0.0f)));
 
 
-    planes.push_back(pPlane);
-    planes[0]->toggleDefaultVisualizer();
-    // for (auto i=0; i<planes.size(); i++)
-    planes[0]->replot();
-    this->insert(planes[0]);
-    setSurroundingSphere(planes[0]->getSurroundingSphere());
+    for (const auto& plane : planes)
+    {
+        plane->toggleDefaultVisualizer();
+        plane->replot();
+        this->insert(plane);
+        setSurroundingSphere(plane->getSurroundingSphere());
+    }
 
 }
 

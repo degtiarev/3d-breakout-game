@@ -103,8 +103,10 @@ void Simulator::setupSimulator()
 
 
 
-    _cubes.push_back(std::make_unique< Cube>(1.0,3.3,4.4));
+    _cubes.push_back(std::make_unique< Cube>(0,0,0,2 ));
     prepareAndInsert(_cubes[0],10,10,1,1);
+
+    //    std::cout<<_cubes[0].getPos();
 
 
     //    _planes.push_back(std::make_unique<Plane>
