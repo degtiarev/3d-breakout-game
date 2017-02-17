@@ -6,51 +6,62 @@ Cube::~Cube() {
 }
 
 
-Cube::Cube(double x, double y, double z, double a)
+Cube::Cube(double x, double y, double z, double a, GMlib::Material color)
 {
-
     this->x=x;//0
     this->y=y;//0
     this->z=z;//0
     this->a=a;//2
 
+    double r=a/2;
+
+    this->color=color;
+
     //south
     planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(-5.0f, -10.0f, 5.0f),
-                       GMlib::Vector<float,3>(10.0f, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
-    //east
-    planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(5.0f, -10.0f, 5.0f),
-                       GMlib::Vector<float,3>(0.0f, 10.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
+                      (GMlib::Point<float,3>(x+r,  y+r, z+r),
+                       GMlib::Vector<float,3>(-a, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, -a)));
+
     //north
     planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(5.0f, 0.0f, 5.0f),
-                       GMlib::Vector<float,3>(-10.0f, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
+                      (GMlib::Point<float,3>(x+r, y-r, z-r ),
+                       GMlib::Vector<float,3>(-a, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, a)));
+
+
     //west
     planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(-5.0f, 0.0f, 5.0f),
-                       GMlib::Vector<float,3>(0.0f, -10.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 0.0f, -10.0f)));
+                      (GMlib::Point<float,3>(x-r, y-r, z-r),
+                       GMlib::Vector<float,3>(0.0f, a, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, a)));
+
+    //east
+    planes.push_back( new GMlib::PPlane<float>
+                      (GMlib::Point<float,3>(x+r, y-r, z+r),
+                       GMlib::Vector<float,3>(0.0f, a, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 0.0f, -a)));
+
     //floor
     planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(-5.0f, -10.0f, -5.0f),
-                       GMlib::Vector<float,3>(10.0f, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 10.0f, 0.0f)));
+                      (GMlib::Point<float,3>(x-r, y-r, z-r),
+                       GMlib::Vector<float,3>(a, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, a, 0.0f)));
+
 
     //ceiling
     planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(-5.0f, -10.0f, 5.0f),
-                       GMlib::Vector<float,3>(10.0f, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 10.0f, 0.0f)));
+                      (GMlib::Point<float,3>(x-r, y-r, z+r),
+                       GMlib::Vector<float,3>(a, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, a, 0.0f)));
+
 
 
     for (const auto& plane : planes)
     {
         plane->toggleDefaultVisualizer();
         plane->replot();
+        plane->setMaterial(color);
         this->insert(plane);
         setSurroundingSphere(plane->getSurroundingSphere());
     }

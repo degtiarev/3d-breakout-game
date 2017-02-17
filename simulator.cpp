@@ -103,8 +103,13 @@ void Simulator::setupSimulator()
 
 
 
-    _cubes.push_back(std::make_unique< Cube>(0,0,0,2 ));
-    prepareAndInsert(_cubes[0],10,10,1,1);
+    _cubes.push_back(std::make_unique< Cube>(1,2,1,7, GMlib::GMmaterial::jade() ));
+    _cubes.push_back(std::make_unique< Cube>(1,2,1,3, GMlib::GMmaterial::copper() ));
+    _cubes.push_back(std::make_unique< Cube>(3,10,1,4, GMlib::GMmaterial::snow() ));
+    _cubes.push_back(std::make_unique< Cube>(-3,2,1,4, GMlib::GMmaterial::blackRubber() ));
+    _cubes.push_back(std::make_unique< Cube>(5,-1,1,4, GMlib::GMmaterial::obsidian() ));
+    _cubes.push_back(std::make_unique< Cube>(8,2,0,5, GMlib::GMmaterial::sapphire()));
+
 
     //    std::cout<<_cubes[0].getPos();
 
@@ -126,6 +131,8 @@ void Simulator::setupSimulator()
     //    _dspheres.back()->setMaterial(GMlib::GMmaterial::chrome());
 
 
+    for (const auto& cube : _cubes)
+        prepareAndInsert(cube , 10, 10, 1 ,1);
     for (const auto& plane : _planes)
         prepareAndInsert(plane , 10, 10, 1 ,1);
     for (const auto& sphere : _dspheres)

@@ -14,10 +14,8 @@
 class Cube : public GMlib::SceneObject {
     GM_SCENEOBJECT(Cube)
     public:
-        //using PPlane::PPlane;
-
-        // 6 planes
-        std::vector <GMlib::PPlane<float>*> planes;
+    // 6 planes
+     std::vector <GMlib::PPlane<float>*> planes;
     // 12 edges
     //  std::vector <GMlib::PCylinder<float>> cylinders;
     // 8 vertices
@@ -26,9 +24,12 @@ class Cube : public GMlib::SceneObject {
     double x;
     double y;
     double z;
-    double a;
 
-    Cube(double, double, double, double);
+    double a;
+    \
+    GMlib::Material color;
+
+    Cube(double, double, double, double, GMlib::Material);
     ~Cube();
 
     void create();
@@ -37,7 +38,7 @@ protected:
     // void localSimulate(double dt) override;
 
 private:
-    //  std::unique_ptr<Cube>    _cube {nullptr};
+
 
 }; // END class Cube
 
