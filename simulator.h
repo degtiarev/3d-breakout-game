@@ -9,8 +9,8 @@
 //helper types
 using DynSphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;
 using Plane = collision::StaticPhysObject<GMlib::PPlane<float>>;
-using DynSpherePtrVector = std::vector<DynSphere*>; //raw pointer
-using PlanePtrVector =  std::vector<Plane*>;        //raw pointer
+//using DynSpherePtrVector = std::vector<DynSphere*>; //raw pointer
+//using PlanePtrVector =  std::vector<Plane*>;        //raw pointer
 using DynSphereVector = std::vector<std::unique_ptr<DynSphere>>;
 using PlaneVector =  std::vector<std::unique_ptr<Plane>>;
 using CubeVector =  std::vector<std::unique_ptr<Cube>>;
@@ -73,6 +73,9 @@ template <> inline
 void Simulator::prepareAndInsert<Cube>(const std::unique_ptr<Cube>& obj, int m1, int m2, int d1, int d2)
 {
     _scene.insert(obj.get());
+
+    for (const  auto& plane : obj->getPlanes())
+        _controller.add(plane.get());
 }
 
 

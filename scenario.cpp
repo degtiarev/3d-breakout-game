@@ -35,6 +35,16 @@ void Scenario::initializeScenario() {
     GMlib::Vector<float,3> init_cam_dir( 0.0f, 1.0f, 0.0f );
     GMlib::Vector<float,3> init_cam_up(  0.0f, 0.0f, 1.0f );
 
+
+
+    // Top cam
+    auto top_rcpair = createRCPair("Top");
+    top_rcpair.camera->enableCulling(false);
+    top_rcpair.camera->set( init_cam_pos + GMlib::Vector<float,3>( 0.0f, 0.0f, 50.0f ), -init_cam_up, init_cam_dir );
+    top_rcpair.camera->setCuttingPlanes( 1.0f, 8000.0f );
+    scene()->insertCamera( top_rcpair.camera.get() );
+    top_rcpair.renderer->reshape( GMlib::Vector<int,2>(init_viewport_size, init_viewport_size) );
+
     // Projection cam
     auto proj_rcpair = createRCPair("Projection");
     proj_rcpair.camera->enableCulling(false);
@@ -61,13 +71,6 @@ void Scenario::initializeScenario() {
     scene()->insertCamera( side_rcpair.camera.get() );
     side_rcpair.renderer->reshape( GMlib::Vector<int,2>(init_viewport_size, init_viewport_size) );
 
-    // Top cam
-    auto top_rcpair = createRCPair("Top");
-    top_rcpair.camera->enableCulling(false);
-    top_rcpair.camera->set( init_cam_pos + GMlib::Vector<float,3>( 0.0f, 0.0f, 50.0f ), -init_cam_up, init_cam_dir );
-    top_rcpair.camera->setCuttingPlanes( 1.0f, 8000.0f );
-    scene()->insertCamera( top_rcpair.camera.get() );
-    top_rcpair.renderer->reshape( GMlib::Vector<int,2>(init_viewport_size, init_viewport_size) );
 
 
     _simulator=std::make_shared<Simulator>(*scene());

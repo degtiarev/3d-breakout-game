@@ -9,13 +9,13 @@
 
 #include <collision_interface.h>
 
-#include <memory.h>
+#include <memory>
 
 class Cube : public GMlib::SceneObject {
     GM_SCENEOBJECT(Cube)
     public:
     // 6 planes
-     std::vector <GMlib::PPlane<float>*> planes;
+    std::vector<std::shared_ptr<collision::StaticPPlane>> planes;
     // 12 edges
     //  std::vector <GMlib::PCylinder<float>> cylinders;
     // 8 vertices
@@ -26,13 +26,16 @@ class Cube : public GMlib::SceneObject {
     double z;
 
     double a;
-    \
+
     GMlib::Material color;
 
     Cube(double, double, double, double, GMlib::Material);
+
     ~Cube();
 
     void create();
+
+    std::vector<std::shared_ptr<collision::StaticPPlane> > getPlanes() const;
 
 protected:
     // void localSimulate(double dt) override;

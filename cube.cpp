@@ -5,6 +5,10 @@ Cube::~Cube() {
     // if(_cube) remove(_cube.get());
 }
 
+std::vector<std::shared_ptr<collision::StaticPPlane> > Cube::getPlanes() const
+{
+    return planes;
+}
 
 Cube::Cube(double x, double y, double z, double a, GMlib::Material color)
 {
@@ -18,42 +22,42 @@ Cube::Cube(double x, double y, double z, double a, GMlib::Material color)
     this->color=color;
 
     //south
-    planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(x+r,  y+r, z+r),
+    planes.push_back( std::make_unique<collision::StaticPPlane>
+                      (GMlib::Point<float,3>(x+r, y+r, z+r),
                        GMlib::Vector<float,3>(-a, 0.0f, 0.0f),
                        GMlib::Vector<float,3>(0.0f, 0.0f, -a)));
 
     //north
-    planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(x+r, y-r, z-r ),
-                       GMlib::Vector<float,3>(-a, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 0.0f, a)));
+    planes.push_back(std::make_unique<collision::StaticPPlane>
+                     (GMlib::Point<float,3>(x+r, y-r, z-r),
+                      GMlib::Vector<float,3>(-a, 0.0f, 0.0f),
+                      GMlib::Vector<float,3>(0.0f, 0.0f, a)));
 
 
     //west
-    planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(x-r, y-r, z-r),
-                       GMlib::Vector<float,3>(0.0f, a, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 0.0f, a)));
+    planes.push_back(std::make_unique<collision::StaticPPlane>
+                     (GMlib::Point<float,3>(x-r, y-r, z-r),
+                      GMlib::Vector<float,3>(0.0f, a, 0.0f),
+                      GMlib::Vector<float,3>(0.0f, 0.0f, a)));
 
     //east
-    planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(x+r, y-r, z+r),
-                       GMlib::Vector<float,3>(0.0f, a, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 0.0f, -a)));
+    planes.push_back(std::make_unique<collision::StaticPPlane>
+                     (GMlib::Point<float,3>(x+r, y-r, z+r),
+                      GMlib::Vector<float,3>(0.0f, a, 0.0f),
+                      GMlib::Vector<float,3>(0.0f, 0.0f, -a)));
 
     //floor
-    planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(x-r, y-r, z-r),
-                       GMlib::Vector<float,3>(a, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, a, 0.0f)));
+    planes.push_back(std::make_unique<collision::StaticPPlane>
+                     (GMlib::Point<float,3>(x-r, y-r, z-r),
+                      GMlib::Vector<float,3>(a, 0.0f, 0.0f),
+                      GMlib::Vector<float,3>(0.0f, a, 0.0f)));
 
 
     //ceiling
-    planes.push_back( new GMlib::PPlane<float>
-                      (GMlib::Point<float,3>(x-r, y-r, z+r),
-                       GMlib::Vector<float,3>(a, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, a, 0.0f)));
+    planes.push_back(std::make_unique<collision::StaticPPlane>
+                     (GMlib::Point<float,3>(x-r, y-r, z+r),
+                      GMlib::Vector<float,3>(a, 0.0f, 0.0f),
+                      GMlib::Vector<float,3>(0.0f, a, 0.0f)));
 
 
 
@@ -62,10 +66,10 @@ Cube::Cube(double x, double y, double z, double a, GMlib::Material color)
         plane->toggleDefaultVisualizer();
         plane->replot();
         plane->setMaterial(color);
-        this->insert(plane);
-        setSurroundingSphere(plane->getSurroundingSphere());
-    }
+        this->insert(plane.get());
 
+    }
+    setSurroundingSphere(GMlib::Sphere<float,3>(GMlib::Point<float,3>(0.0f,0.0f,0.0f),1.0f));
 }
 
 void Cube::create() {
