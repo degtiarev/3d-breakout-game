@@ -114,12 +114,12 @@ void Simulator::setupSimulator()
 
 
 
-    _cubes.push_back(std::make_unique< Cube>(0,0,0,5, GMlib::GMmaterial::jade() ));
-    _cubes.push_back(std::make_unique< Cube>(1,2,1,3, GMlib::GMmaterial::copper() ));
-    _cubes.push_back(std::make_unique< Cube>(3,10,1,4, GMlib::GMmaterial::snow() ));
-    _cubes.push_back(std::make_unique< Cube>(-3,2,1,4, GMlib::GMmaterial::blackRubber() ));
-    _cubes.push_back(std::make_unique< Cube>(5,-1,1,4, GMlib::GMmaterial::obsidian() ));
-    _cubes.push_back(std::make_unique< Cube>(8,2,0,5, GMlib::GMmaterial::sapphire()));
+    _cubes.push_back(std::make_unique<Cuboid>(0 ,0 ,0 ,10 ,20 ,30 ,GMlib::GMmaterial::jade()));
+//    _cubes.push_back(std::make_unique< Cuboid>(1,2,1,3, GMlib::GMmaterial::copper() ));
+//    _cubes.push_back(std::make_unique< Cuboid>(3,10,1,4, GMlib::GMmaterial::snow() ));
+//    _cubes.push_back(std::make_unique< Cuboid>(-3,2,1,4, GMlib::GMmaterial::blackRubber() ));
+//    _cubes.push_back(std::make_unique< Cuboid>(5,-1,1,4, GMlib::GMmaterial::obsidian() ));
+//    _cubes.push_back(std::make_unique< Cuboid>(8,2,0,5, GMlib::GMmaterial::sapphire()));
 
 
     //    std::cout<<_cubes[0].getPos();

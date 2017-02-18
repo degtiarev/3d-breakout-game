@@ -4,7 +4,7 @@
 #include <collision_library.h>
 #include <gmParametricsModule>
 #include <vector>
-#include "cube.h"
+#include "cuboid.h"
 
 //helper types
 using DynSphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;
@@ -13,7 +13,7 @@ using Plane = collision::StaticPhysObject<GMlib::PPlane<float>>;
 //using PlanePtrVector =  std::vector<Plane*>;        //raw pointer
 using DynSphereVector = std::vector<std::unique_ptr<DynSphere>>;
 using PlaneVector =  std::vector<std::unique_ptr<Plane>>;
-using CubeVector =  std::vector<std::unique_ptr<Cube>>;
+using CubeVector =  std::vector<std::unique_ptr<Cuboid>>;
 
 
 //class SimulationController : public GMlib::SceneObject
@@ -70,7 +70,7 @@ void Simulator::prepareAndInsert(const std::unique_ptr<T>& obj, int m1, int m2, 
 }
 
 template <> inline
-void Simulator::prepareAndInsert<Cube>(const std::unique_ptr<Cube>& obj, int m1, int m2, int d1, int d2)
+void Simulator::prepareAndInsert<Cuboid>(const std::unique_ptr<Cuboid>& obj, int m1, int m2, int d1, int d2)
 {
     _scene.insert(obj.get());
 
