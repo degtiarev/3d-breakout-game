@@ -1,20 +1,5 @@
 #include "cuboid.h"
 
-//Cuboid::Cuboid(double x, double y, double z, double a, GMlib::Material color, bool isCeilingExist)
-//{
-//    init(x, y, z, a, a, a, color, isCeilingExist);
-//}
-
-//Cuboid::Cuboid(double x, double y, double z, double a, GMlib::Material)
-//{
-//    init(x, y, z, a, a, a, color, false);
-//}
-
-//Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material)
-//{
-//    init(x, y, z, a, b, c, color, false);
-//}
-
 Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color, bool isCeilingExist)
 {
     this->x=x;//0

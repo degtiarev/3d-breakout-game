@@ -5,6 +5,7 @@
 #include <gmParametricsModule>
 #include <vector>
 #include "cuboid.h"
+#include "cubematrix.h"
 
 //helper types
 using DynSphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;

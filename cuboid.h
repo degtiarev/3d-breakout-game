@@ -14,8 +14,8 @@
 class Cuboid : public GMlib::SceneObject {
     GM_SCENEOBJECT(Cuboid)
     public:
-        // 6 planes
-        std::vector<std::shared_ptr<collision::StaticPPlane>> planes;
+    // 6 planes
+    std::vector<std::shared_ptr<collision::StaticPPlane>> planes;
     // 12 edges
     //  std::vector <GMlib::PCylinder<float>> cylinders;
     // 8 vertices
@@ -35,10 +35,10 @@ class Cuboid : public GMlib::SceneObject {
 
     Cuboid(double x, double y, double z, double a, GMlib::Material color, bool isCeilingExist )
         : Cuboid (x, y, z, a, a, a, color, isCeilingExist) {}
-    Cuboid(double x, double y, double z, double a, GMlib::Material)
-        : Cuboid (x, y, z, a, a, a, color, false) {}
+    Cuboid(double x, double y, double z, double a, GMlib::Material color)
+        : Cuboid (x, y, z, a, a, a, color, true) {}
     Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color)
-        : Cuboid (x, y, z, a, b, c, color, false) {}
+        : Cuboid (x, y, z, a, b, c, color, true) {}
 
     ~Cuboid();
 

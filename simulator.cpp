@@ -114,7 +114,9 @@ void Simulator::setupSimulator()
 
 
 
-    _cubes.push_back(std::make_unique<Cuboid>(0 ,0 ,0 ,10 ,20 ,30 ,GMlib::GMmaterial::jade()));
+    _cubes.push_back(std::make_unique<Cuboid>(0 ,0 ,0 ,30 ,20 ,40 ,GMlib::GMmaterial::turquoise(), false));
+
+  //  CubeMatrix matrix = ma<CubeMatrix>(5,5,5, 0,0,0, 2);
 //    _cubes.push_back(std::make_unique< Cuboid>(1,2,1,3, GMlib::GMmaterial::copper() ));
 //    _cubes.push_back(std::make_unique< Cuboid>(3,10,1,4, GMlib::GMmaterial::snow() ));
 //    _cubes.push_back(std::make_unique< Cuboid>(-3,2,1,4, GMlib::GMmaterial::blackRubber() ));
