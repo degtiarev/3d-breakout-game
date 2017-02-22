@@ -12,7 +12,6 @@
 
 #include <memory>
 
-using namespace std;
 
 class CubeMatrix
 {
@@ -20,7 +19,7 @@ public:
 
     CubeMatrix(int height, int width, int depth, double startX, double startY, double startZ, double a);
 
-    vector<shared_ptr<Cuboid>> array3D;
+    std::vector<std::shared_ptr<Cuboid>> array3D;
     int height;
     int width;
     int depth;
@@ -31,9 +30,12 @@ public:
 
     double a;
 
-    shared_ptr<Cuboid> getElement (int x, int y, int z);
+    std::shared_ptr<Cuboid> getElement (int x, int y, int z);
 
 
+
+    //    std::vector<std::unique_ptr<Cuboid> > getArray3D() const;
+    std::vector<std::shared_ptr<Cuboid> > getArray3D() const;
 };
 
 #endif // CUBEMATRIX_H

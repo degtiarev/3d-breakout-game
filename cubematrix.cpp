@@ -1,6 +1,6 @@
 #include "cubematrix.h"
 
- CubeMatrix::CubeMatrix(int height, int width, int depth, double startX, double startY, double startZ, double a)
+CubeMatrix::CubeMatrix(int height, int width, int depth, double startX, double startY, double startZ, double a)
 {
     this->height=height;
     this->width=width;
@@ -11,15 +11,16 @@
     this->startZ = startZ;
     this->a=a;
 
-//    double currentX=startX+a/2;
-//    double currentY=startY+a/2;
-//    double currentZ=startZ+a/2;
+    double currentX=startX+a/2;
+    double currentY=startY+a/2;
+    double currentZ=startZ+a/2;
 
-    array3D.resize(height*width+depth);
+    array3D.resize(height*width*depth);
 
 
-    for (int i = 0; i < height; ++i){
-        for (int j = 0; j < height; ++j)
+    for (int i = 0; i < depth; ++i)
+    {
+        for (int j = 0; j < width; ++j)
         {
             for (int k = 0; k < height; ++k)
             {
@@ -32,15 +33,29 @@
                 if (i==5) color = GMlib::GMmaterial::turquoise();
                 if (i>=6) color = GMlib::GMmaterial::blackRubber();
 
-                    //array3D[i*j+k] = std::shared_ptr<Cuboid> (currentX, currentY, currentZ, a, color);
+                int element =  i + width * (j + depth * k);
+                array3D[element] = std::make_unique<Cuboid> (currentX, currentY, currentZ, a, color);
+
+                currentX+=a;
 
             }
+            currentX=startX+a/2;
+            currentY+=a;
         }
 
+        currentZ+=a;
+        currentY=startY+a/2;
+        currentX=startX+a/2;
     }
 }
 
+std::vector<std::shared_ptr<Cuboid> > CubeMatrix::getArray3D() const
+{
+    return array3D;
+}
+
+
 std::shared_ptr<Cuboid> CubeMatrix::getElement(int x, int y, int z)
 {
-    return array3D[x*y+z];
+    return array3D[x + width * (y + depth * z)];
 }

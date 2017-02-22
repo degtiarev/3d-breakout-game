@@ -1,5 +1,10 @@
 #include "cuboid.h"
 
+void Cuboid::setIsExist(bool value)
+{
+    isExist = value;
+}
+
 Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color, bool isCeilingExist)
 {
     this->x=x;//0
@@ -75,6 +80,7 @@ void Cuboid::create() {
 Cuboid::~Cuboid() {
 
     // if(_cube) remove(_cube.get());
+    std::cout<<"destructor";
 }
 
 std::vector<std::shared_ptr<collision::StaticPPlane> > Cuboid::getPlanes() const
@@ -85,3 +91,8 @@ std::vector<std::shared_ptr<collision::StaticPPlane> > Cuboid::getPlanes() const
 
 
 
+
+bool Cuboid::getIsExist() const
+{
+    return isExist;
+}

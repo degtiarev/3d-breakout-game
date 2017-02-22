@@ -96,4 +96,5 @@ void Scenario::initializeScenario() {
 
 void Scenario::cleanupScenario() {
 
+    //   _simulator.reset();
 }

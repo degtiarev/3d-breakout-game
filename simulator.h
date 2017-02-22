@@ -14,7 +14,7 @@ using Plane = collision::StaticPhysObject<GMlib::PPlane<float>>;
 //using PlanePtrVector =  std::vector<Plane*>;        //raw pointer
 using DynSphereVector = std::vector<std::unique_ptr<DynSphere>>;
 using PlaneVector =  std::vector<std::unique_ptr<Plane>>;
-using CubeVector =  std::vector<std::unique_ptr<Cuboid>>;
+using CubeVector =  std::vector<std::shared_ptr<Cuboid>>;
 
 
 //class SimulationController : public GMlib::SceneObject
@@ -56,6 +56,8 @@ private:
 
     template<typename T>
     void prepareAndInsert (const std::unique_ptr<T>& obj, int m1, int m2, int d1, int d2);
+    template<typename T>
+    void prepareAndInsert (const std::shared_ptr<T>& obj, int m1, int m2, int d1, int d2);
 
 
 };
@@ -71,13 +73,14 @@ void Simulator::prepareAndInsert(const std::unique_ptr<T>& obj, int m1, int m2, 
 }
 
 template <> inline
-void Simulator::prepareAndInsert<Cuboid>(const std::unique_ptr<Cuboid>& obj, int m1, int m2, int d1, int d2)
+void Simulator::prepareAndInsert<Cuboid>(const std::shared_ptr<Cuboid>& obj, int m1, int m2, int d1, int d2)
 {
     _scene.insert(obj.get());
 
     for (const  auto& plane : obj->getPlanes())
         _controller.add(plane.get());
 }
+
 
 
 #endif // SIMULATOR_H

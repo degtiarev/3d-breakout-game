@@ -138,6 +138,7 @@ set( HDRS
   application/window.h
   application/utils.h
 
+  gamecontroller.h
   cubematrix.h
   cuboid.h
   testtorus.h
@@ -162,6 +163,7 @@ set( SRCS
   application/guiapplication.cpp
   application/window.cpp
 
+  gamecontroller.cpp
   cubematrix.cpp
   cuboid.cpp
   application/main.cpp
