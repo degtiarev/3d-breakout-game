@@ -32,9 +32,6 @@ public:
 
     std::shared_ptr<Cuboid> getElement (int x, int y, int z);
 
-
-
-    //    std::vector<std::unique_ptr<Cuboid> > getArray3D() const;
     std::vector<std::shared_ptr<Cuboid> > getArray3D() const;
 };
 

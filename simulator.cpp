@@ -114,33 +114,24 @@ void Simulator::setupSimulator()
 
 
 
-    //  _cubes.push_back(std::make_unique<Cuboid>(0 ,0 ,0 ,30 ,20 ,40 ,GMlib::GMmaterial::turquoise(), false));
+    _cubes.push_back(std::make_unique<Cuboid>(0 ,0 ,0 ,30 ,20 , 60 ,GMlib::GMmaterial::brass(), false, INT_MAX));
 
-    std::shared_ptr<CubeMatrix> matrix = std::make_shared< CubeMatrix>(7,7,7, 0,0,0, 2);
-
-    //_cubeMatrices.push_back(std::make_unique< CubeMatrix>(5,5,5, 0,0,0, 2));
-
+    std::shared_ptr<CubeMatrix> matrix = std::make_shared< CubeMatrix>(6, 4, 6, -15, -10, -30, 5);
     for (const auto& cube : matrix->getArray3D())
         _cubes.push_back(cube);
-    //    _cubes.insert(matrix->getArray3D());
+
+    //    _planes.push_back(std::make_unique<Plane>
+    //                      (GMlib::Point<float,3>(-50, -50, 80.0f),
+    //                       GMlib::Vector<float,3>(100.0f, 0.0f, 0.0f),
+    //                       GMlib::Vector<float,3>(0.0f, 100.0f, 0.0f)));
 
 
+    _dspheres.push_back(std::make_unique<DynSphere> ());
+    _dspheres.back()->setRadius(2.5);
+    _dspheres.back()->translateGlobal(GMlib::Vector<float,3> (0.0f, 0.0f, 10.0f));
+    _dspheres.back()->velocity=GMlib::Vector<double,3> (0.0f, 0.0f, -20.0f);
+    _dspheres.back()->setMaterial(GMlib::GMmaterial::blackPlastic());
 
-    //    for (const auto& cube : matrix->getArray3D())
-    //    {
-    //        _cubes.push_back( cube);
-    //    }
-    //    // _cubes.insert(matrix->getArray3D());
-
-
-    //        _cubes.push_back(std::make_unique< Cuboid>(1,2,1,3, GMlib::GMmaterial::copper() ));
-    //        _cubes.push_back(std::make_unique< Cuboid>(3,10,1,4, GMlib::GMmaterial::snow() ));
-    //        _cubes.push_back(std::make_unique< Cuboid>(-3,2,1,4, GMlib::GMmaterial::blackRubber() ));
-    //        _cubes.push_back(std::make_unique< Cuboid>(5,-1,1,4, GMlib::GMmaterial::obsidian() ));
-    //        _cubes.push_back(std::make_unique< Cuboid>(8,2,0,5, GMlib::GMmaterial::sapphire()));
-
-
-    //    std::cout<<_cubes[0].getPos();
 
 
     //    _planes.push_back(std::make_unique<Plane>

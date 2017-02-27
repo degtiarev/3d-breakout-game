@@ -5,7 +5,7 @@ void Cuboid::setIsExist(bool value)
     isExist = value;
 }
 
-Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color, bool isCeilingExist)
+Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color, bool isCeilingExist, int id)
 {
     this->x=x;//0
     this->y=y;//0
@@ -13,6 +13,8 @@ Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib
     this->a=a;//2
     this->b=b;//2
     this->c=c;//2
+
+    this->id=id;
 
     double a1=a/2;
     double b1=b/2;
@@ -61,13 +63,14 @@ Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib
 
 
 
-    for (const auto& plane : planes)
+    for ( auto& plane : planes)
     {
+
+        plane->setId(id);
         plane->toggleDefaultVisualizer();
         plane->replot();
         plane->setMaterial(color);
         this->insert(plane.get());
-
     }
     setSurroundingSphere(GMlib::Sphere<float,3>(GMlib::Point<float,3>(0.0f,0.0f,0.0f),1.0f));
 }

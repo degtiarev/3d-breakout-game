@@ -33,8 +33,9 @@ CubeMatrix::CubeMatrix(int height, int width, int depth, double startX, double s
                 if (i==5) color = GMlib::GMmaterial::turquoise();
                 if (i>=6) color = GMlib::GMmaterial::blackRubber();
 
-                int element =  i + width * (j + depth * k);
-                array3D[element] = std::make_unique<Cuboid> (currentX, currentY, currentZ, a, color);
+                int element =  i + depth * (j + width * k);
+                array3D[element] = std::make_unique<Cuboid> (currentX, currentY, currentZ, a, color, element);
+
 
                 currentX+=a;
 
@@ -57,5 +58,5 @@ std::vector<std::shared_ptr<Cuboid> > CubeMatrix::getArray3D() const
 
 std::shared_ptr<Cuboid> CubeMatrix::getElement(int x, int y, int z)
 {
-    return array3D[x + width * (y + depth * z)];
+    return array3D [z + depth * (y + width * x)];
 }

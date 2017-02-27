@@ -8,6 +8,7 @@
 #include <scene/gmsceneobject>
 
 #include <collision_interface.h>
+#include <collision_library.h>
 
 #include <memory>
 
@@ -29,18 +30,20 @@ class Cuboid : public GMlib::SceneObject {
     double b;
     double c;
 
-    bool isExist;
+    bool isExist=true;
 
     GMlib::Material color;
 
-    Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color, bool isCeilingExist) ;
+    int id;
 
-    Cuboid(double x, double y, double z, double a, GMlib::Material color, bool isCeilingExist )
-        : Cuboid (x, y, z, a, a, a, color, isCeilingExist) {}
-    Cuboid(double x, double y, double z, double a, GMlib::Material color)
-        : Cuboid (x, y, z, a, a, a, color, true) {}
-    Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color)
-        : Cuboid (x, y, z, a, b, c, color, true) {}
+    Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color, bool isCeilingExist, int id) ;
+
+    Cuboid(double x, double y, double z, double a, GMlib::Material color, bool isCeilingExist, int id )
+        : Cuboid (x, y, z, a, a, a, color, isCeilingExist, id) {}
+    Cuboid(double x, double y, double z, double a, GMlib::Material color, int id)
+        : Cuboid (x, y, z, a, a, a, color, true, id) {}
+    Cuboid(double x, double y, double z, double a, double b, double c, GMlib::Material color, int id)
+        : Cuboid (x, y, z, a, b, c, color, true, id) {}
 
     ~Cuboid();
 
