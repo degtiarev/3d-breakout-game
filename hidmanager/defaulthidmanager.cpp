@@ -471,6 +471,11 @@ void DefaultHidManager::heOpenCloseHidHelp() {
   emit signOpenCloseHidHelp();
 }
 
+void DefaultHidManager::heGoUp()
+{
+    emit signGoUp();
+}
+
 Camera* DefaultHidManager::findCamera( const QString& view_name ) const {
 
   return _gmlib->camera(view_name).get();
@@ -649,6 +654,13 @@ void DefaultHidManager::setupDefaultHidBindings() {
                          this, SLOT(heLeftMouseReleaseStuff()) );
 
 
+  // Plane up
+  QString ha_id_control_up =
+          registerHidAction( "Controls",
+                             "Plane up",
+                             "Plane up",
+                             this, SLOT(heGoUp()), OGL_TRIGGER);
+
 
 
   //// Set up initial mapping
@@ -675,6 +687,8 @@ void DefaultHidManager::setupDefaultHidBindings() {
   registerHidMapping( ha_id_view_pan_h,                   new WheelInput( Qt::ControlModifier ) );
   registerHidMapping( ha_id_view_pan_v,                   new WheelInput( Qt::ShiftModifier ) );
   registerHidMapping( ha_id_view_zoom,                    new WheelInput() );
+
+  registerHidMapping( ha_id_control_up,                   new KeyPressInput( Qt::Key_Up ) );
 }
 
 void DefaultHidManager::init(GMlibWrapper& gmlib) {

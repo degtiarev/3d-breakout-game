@@ -98,3 +98,8 @@ void Scenario::cleanupScenario() {
 
     //   _simulator.reset();
 }
+
+void Scenario::planeUp()
+{
+    _simulator->_controll_plane->moveUp();
+}

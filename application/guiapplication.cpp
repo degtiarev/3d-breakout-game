@@ -97,10 +97,13 @@ GuiApplication::afterOnSceneGraphInitialized() {
   connect( &_window, &Window::signMouseReleased,      &_hidmanager, &StandardHidManager::registerMouseReleaseEvent );
   connect( &_window, &Window::signWheelEventOccurred, &_hidmanager, &StandardHidManager::registerWheelEvent );
 
+  connect (&_hidmanager, &DefaultHidManager::signGoUp, this, &GuiApplication::planeUp, Qt::DirectConnection);
+
   // Handle HID OpenGL actions; needs to have the OGL context bound;
   // QQuickWindow's beforeRendering singnal provides that on a DirectConnection
   connect( &_window, &Window::beforeRendering,        &_hidmanager, &DefaultHidManager::triggerOGLActions,
            Qt::DirectConnection );
+
 
   // Register an application close event in the hidmanager;
   // the QWindow must be closed instead of the application being quitted,
@@ -121,6 +124,11 @@ GuiApplication::afterOnSceneGraphInitialized() {
 
   // Start simulator
   _scenario.start();
+}
+
+void GuiApplication::planeUp()
+{
+    _scenario.planeUp();
 }
 
 const GuiApplication& GuiApplication::instance() {  return *_instance; }

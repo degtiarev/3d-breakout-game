@@ -132,6 +132,10 @@ void Simulator::setupSimulator()
     _dspheres.back()->velocity=GMlib::Vector<double,3> (0.0f, 0.0f, -20.0f);
     _dspheres.back()->setMaterial(GMlib::GMmaterial::blackPlastic());
 
+    _planes.push_back(std::make_unique<Plane>
+                      (GMlib::Point<float,3>(0.0f, 0.0f, 35.0f),
+                       GMlib::Vector<float,3>(5.0f, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 5.0f, 0.0f)));
 
 
     //    _planes.push_back(std::make_unique<Plane>

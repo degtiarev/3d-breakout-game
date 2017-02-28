@@ -7,6 +7,8 @@
 #include "cuboid.h"
 #include "cubematrix.h"
 
+#include <gmSceneModule>
+
 //helper types
 using DynSphere = collision::DynamicPhysObject<GMlib::PSphere<float>>;
 using Plane = collision::StaticPhysObject<GMlib::PPlane<float>>;
@@ -45,6 +47,7 @@ public:
 
     void setupSimulator();
 
+     collision::StaticPhysObject<GMlib::PPlane<float>>* _controll_plane;
 
 private:
 
@@ -60,6 +63,7 @@ private:
     void prepareAndInsert (const std::shared_ptr<T>& obj, int m1, int m2, int d1, int d2);
 
 
+
 };
 
 template <typename T> inline
@@ -69,6 +73,9 @@ void Simulator::prepareAndInsert(const std::unique_ptr<T>& obj, int m1, int m2, 
     obj->replot(m1, m2, d1, d2);
     _scene.insert(obj.get());
     _controller.add(obj.get());
+
+    GMlib::Array<GMlib::Visualizer*> &visus = obj->getVisualizers();
+    for( int i = 0; i < visus.getSize(); i++ ) visus[i]->toggleDisplayMode();
 
 }
 
