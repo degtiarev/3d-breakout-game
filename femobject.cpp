@@ -5,82 +5,74 @@ int Femobject::randomMinMax(int nMin, int nMax)
     return nMin + (int)((double)rand() / (RAND_MAX+1) * (nMax-nMin+1));
 }
 
-void Femobject::regualTriangualtion(int n,int m, float r,bool switcher)
+void Femobject::makeRegualTriangualtion(int n, int m, float r, bool switcher)
 {
-
-    //n - number of nodes
-    //m - number of circlse
+    //n - number of nodes on first internal circle (number of points on first row)
+    //m - number of circles (number of rows)
     //r - radius
+
+    // start from internal circle
     auto start_pt = GMlib::Point<float,2>(0,0);
     this->insertAlways(start_pt);
 
-    for(int i=0;i<m;i++){
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n*(i+1); j++){
 
-        for(int j=0;j<n*(i+1);j++){
+            GMlib::Angle rotationAngle = (j*M_2PI)/(n*(i+1));
+            GMlib::SqMatrix<float,2> rotationMatrix(rotationAngle,GMlib::Vector<float,2>(1,0),GMlib::Vector<float,2>(0,1));
+            GMlib::Point<float,2> point = rotationMatrix * GMlib::Vector<float,2>((((i+1)*r)/m),0);
 
-            GMlib::Angle a = (j*M_2PI)/(n*(i+1));
-            GMlib::SqMatrix<float,2> mt(a,GMlib::Vector<float,2>(1,0),GMlib::Vector<float,2>(0,1));
-            GMlib::Point<float,2> pt = mt*GMlib::Vector<float,2>((((i+1)*r)/m),0);
-
-            this->insertAlways(pt);
+            this->insertAlways(point);
         }
     }
     if (switcher){
         this->triangulateDelaunay();}
-
 }
 
-void Femobject::randomTriangulation(int n, float r)
+void Femobject::makeRandomTriangulation(int n, float r)
 {
+    // n - number of nodes
     GMlib::Point<float,2> start_pt (0,0);
-    auto rn = 4;// regular n
-    auto m = n/rn; //number of circles
+    auto rn = 4; //regular n
+    auto m = n/rn; // number of circles
 
-    regualTriangualtion(rn,m,r,false);
+    makeRegualTriangualtion(rn,m,r,false);
 
     auto nm_coeff = std::max((M_PI/(sqrt(3)*(sin(M_PI/2)*sin(M_PI/2))+2-n))*(1/2*n), 1.1);
+    auto num = 1+n*nm_coeff; // nubmer of points
 
-    auto num = 1+n*nm_coeff;
-    int t = n*0.2;//number of swaps
-
-    std::cout << this->getSize() << std::endl;
-
-    for(int i=0;i<t ;i++)
+    // shuffle cycle
+    int t = n*0.8; // number of swaps
+    for(int i=0; i<t; i++)
     {
-        std::cout << "Shuffle cycle num:" << i << std::endl;
-
         auto p1 = (*this)[randomMinMax(0,this->getSize())];
         auto p2 = (*this)[randomMinMax(0,this->getSize())];
 
         std::swap(p1,p2);
     }
-    std::cout << "num:" << num << std::endl;
-    for (int j = 0; j < num*4; j++)
-    {
-        int todel = randomMinMax(0,this->getSize()-1);
 
-        auto distVector = GMlib::Vector<float,2>(start_pt-(*this)[todel]);
+    for (int j = 0; j < num*rn; j++)
+    {
+        int todelete = randomMinMax(0,this->getSize()-1);
+
+        auto distVector = GMlib::Vector<float,2>( start_pt-(*this)[todelete]);
         double dist = distVector.getLength();
 
         if (std::abs(dist - r) > 0.01)
         {
-            this->removeIndex(todel);
+            this->removeIndex(todelete);
         }
 
     }
 
-    std::cout << this->getSize() << std::endl;
-
     this->triangulateDelaunay();
-
 }
 
-GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::vectorArray(GMlib::TSTriangle<float>* tr, Node *node)
+GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::getVectorArray(GMlib::TSTriangle<float>* tr, Node *node)
 {
-
     GMlib::Point<float,2> p0,p1,p2;
     GMlib::Vector<GMlib::Vector<float,2>,3> d; //output
-    GMlib::Array<GMlib::TSVertex<float>*>   v = tr->getVertices();
+    GMlib::Array<GMlib::TSVertex<float>*> v = tr->getVertices();
 
     if (node->isThis(v[1])){
         std::swap(v[0],v[1]);
@@ -99,50 +91,33 @@ GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::vectorArray(GMlib::TSTriang
     d[2] = p2 - p1;
 
     return d;
-
 }
 
-void Femobject::computation()
+void Femobject::computeStiffnessmatrix()
 {
-    /**
-
-
-**/
-    for (int i=0;i<this->size();i++){
-
-        if (!(this->getVertex(i)->boundary())) {
-            //GMlib::TSVertex<float>* vt = this->getVertex(i) ;
-            //Node node = Node();
-            //node._vt = vt;
-            //nodes.insertAlways(node,true);
-
-            //std::cout << i << std::endl;
-
+    for (int i=0;i<this->size();i++)
+        if (!(this->getVertex(i)->boundary()))
             nodes+= Node((*this)[i]);
-        }
-    }
-    //std::cout << nodes.getSize() << std::endl;
+
     A.setDim(nodes.getSize(),nodes.getSize());
     b.setDim(nodes.getSize());
 
     //set zeroes in _A
-    for(int i=0; i<A.getDim1();i++){
-        for (int j=0;j<A.getDim2();j++){
+    for(int i=0; i<A.getDim1();i++)
+        for (int j=0;j<A.getDim2();j++)
             A[i][j] = 0;
-        }
-    }
 
     //computation
-    for (int i=0;i<nodes.getSize();i++){
+    for (int i=0; i<nodes.getSize(); i++){
 
         //Non diagonal elements
         GMlib::Vector<GMlib::Vector<float,2>,3> d;
         for (int j=0;j<i;j++){
 
-            GMlib::TSEdge<float>* edg = nodes[i].neighbour(nodes[j]);
+            GMlib::TSEdge<float>* edg = nodes[i].getNeighborEdge(nodes[j]);
             if (edg != NULL){
 
-                d = vectorArrays(edg);
+                d = getVectorArrays(edg);
                 auto d0 = d[0];
                 auto d1 = d[1];
                 auto d2 = d[2];
@@ -161,56 +136,46 @@ void Femobject::computation()
                 A[i][j] = (dh1 * (1 - dh1) / h1 - dd) * area1 * 0.5 + (dh2 * (1 - dh2) / h2 - dd) * area2 * 0.5;
 
                 A[j][i] = A[i][j];
-                //std::cout << A[i][j] << std::endl;
-
             }
         }
 
-        GMlib::Array <GMlib::TSTriangle<float>*> tr = nodes[i].getTriangles();
+        GMlib::Array <GMlib::TSTriangle<float>*> tr = nodes[i].getAdjacentTriangles();
 
         float Tk =0.0;
         for (int k=0;k<tr.getSize();k++){
-            d = vectorArray(tr[k],&nodes[i]);
+            d = getVectorArray(tr[k], &nodes[i]);
             auto d0 = d[0];
             auto d1 = d[1];
             auto d2 = d[2];
 
-            Tk += (d2 * d2) / (std::abs(d0 ^ d1) * 2);//*0.5
+            Tk += (d2 * d2) / (std::abs(d0 ^ d1) * 2);
         }
         A[i][i] = Tk;
-        //std::cout << A[i][i] << std::endl;
     }
 
     for (int i=0;i<nodes.getSize();i++){
 
-        GMlib::Array <GMlib::TSTriangle<float>*> tr = nodes[i].getTriangles();
+        GMlib::Array <GMlib::TSTriangle<float>*> tr = nodes[i].getAdjacentTriangles();
 
         float bsum = 0;
-        for (int k=0;k<tr.getSize();k++){
-
+        for (int k=0;k<tr.getSize();k++)
             bsum += tr[k]->getArea2D()/3;
-        }
+
         b[i] = bsum;
-        //std::cout << b[i] << std::endl;
     }
+
     A.invert();
-
 }
-
 
 void Femobject::updateHeight(float f)
 {
     GMlib::DVector<float> x1;
     x1.setDim(nodes.getSize());
     x1 = (f*b);
-    GMlib::DVector<float> x = A*x1;//A*x1;
+    GMlib::DVector<float> x = A*x1;
 
-
-    for (int i=0;i<nodes.getSize();i++){
-        //std::cout << x[i] << std::endl;
-        this->nodes[i].setZ(x[i]);
-    }
-
+    for (int i=0;i<nodes.getSize();i++)
+        this->nodes[i].updateZ(x[i]);
 }
 
 void Femobject::localSimulate(double dt)
@@ -232,7 +197,7 @@ void Femobject::localSimulate(double dt)
 
 }
 
-GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::vectorArrays(GMlib::TSEdge<float>* edg)
+GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::getVectorArrays(GMlib::TSEdge<float>* edg)
 {
 
     GMlib::Array<GMlib::TSTriangle<float>*> tr = edg->getTriangle();
@@ -247,22 +212,19 @@ GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::vectorArrays(GMlib::TSEdge<
     p1 = edg->getLastVertex()->getParameter();
 
     //p2
-    for(int i=0;i<3;i++){
+    for(int i=0;i<3;i++)
         if(v1[i]!=edg->getFirstVertex() && v1[i]!=edg->getLastVertex())
             p2 = v1[i]->getParameter();
-    }
+
     //p3
-    for(int i=0;i<3;i++){
+    for(int i=0;i<3;i++)
         if(v2[i]!=edg->getFirstVertex() && v2[i]!=edg->getLastVertex())
             p3 = v2[i]->getParameter();
-    }
+
 
     d[0] = p1 - p0;
     d[1] = p2 - p0;
     d[2] = p3 - p0;
 
     return d;
-
 }
-
-

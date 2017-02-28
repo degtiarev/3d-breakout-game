@@ -11,22 +11,17 @@
 class Node
 {
 private:
-
-
+        GMlib::TSVertex<float> * _vt; //vertex
 
 public:
-    GMlib::TSVertex<float> * _vt; //vertex
-
     Node();
     Node(GMlib::TSVertex<float>& nodeVert);
 
-    GMlib::Array<GMlib::TSTriangle<float> *> getTriangles();
-    GMlib::TSEdge <float> * neighbour(Node &n);
+    GMlib::Array<GMlib::TSTriangle<float> *> getAdjacentTriangles();
+    GMlib::TSEdge <float> * getNeighborEdge(Node &n);
+
     bool isThis (GMlib::TSVertex<float> * _vt);
-
-    void setZ(float z);
-
-
+    void updateZ(float z);
 
 };
 

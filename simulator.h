@@ -49,7 +49,7 @@ public:
 private:
 
     GMlib::Scene& _scene;
-    collision::MyController _controller;
+    //collision::MyController _controller;
 
     PlanePtrVector _planes;
     DynSpherePtrVector _dspheres;
@@ -67,7 +67,7 @@ void Simulator::prepareAndInsert(const std::unique_ptr<T>& obj, int m1, int m2, 
     obj->toggleDefaultVisualizer();
     obj->replot(m1, m2, d1, d2);
     _scene.insert(obj.get());
-    _controller.add(obj.get());
+    //  _controller.add(obj.get());
 
 }
 

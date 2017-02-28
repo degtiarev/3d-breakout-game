@@ -118,8 +118,8 @@ void Simulator::setupSimulator()
 
 
     myFemObject1 = new Femobject();
-    myFemObject1->randomTriangulation(30, 5);
-    myFemObject1->computation();
+    myFemObject1->makeRandomTriangulation(30, 5);
+    myFemObject1->computeStiffnessmatrix();
     myFemObject1->updateHeight(1);
     myFemObject1->toggleDefaultVisualizer();
     myFemObject1->setMaterial(GMlib::GMmaterial::sapphire());
@@ -127,8 +127,8 @@ void Simulator::setupSimulator()
     _scene.insert(myFemObject1);
 
     myFemObject2 = new Femobject();
-    myFemObject2->regualTriangualtion(15, 5, 5, true);
-    myFemObject2->computation();
+    myFemObject2->makeRegualTriangualtion(15, 5, 5, true);
+    myFemObject2->computeStiffnessmatrix();
     myFemObject2->updateHeight(1);
     myFemObject2->toggleDefaultVisualizer();
     myFemObject2->setMaterial(GMlib::GMmaterial::polishedGreen());

@@ -13,29 +13,31 @@ class Femobject : public GMlib::TriangleFacets<float>
 {
 
 private:
-    GMlib::DMatrix<float> A;
-    GMlib::DVector <float> b;
+    GMlib::DMatrix<float> A; // stiffness matrix
+    GMlib::DVector <float> b; // load vector
     GMlib::ArrayLX<Node> nodes;
 
-    float max=1;
+    float max = 1;
     float min =-1;
 
     bool forceSwitcher = true;
-    double force =0.0;
+    double force = 0.0;
 
 
 public:
     Femobject():GMlib::TriangleFacets<float>(50) {}
-    GMlib::Vector<GMlib::Vector<float,2>,3> vectorArrays (GMlib::TSEdge<float> *edg);
-    GMlib::Vector<GMlib::Vector<float, 2>, 3> vectorArray(GMlib::TSTriangle<float>* tr, Node *node);
+    // not on diagonal, that have adjacent edge
+    GMlib::Vector<GMlib::Vector<float,2>,3> getVectorArrays (GMlib::TSEdge<float> *edge);
+    //
+    GMlib::Vector<GMlib::Vector<float, 2>, 3> getVectorArray(GMlib::TSTriangle<float>* tr, Node *node);
     void updateHeight ( float h );
 
     void localSimulate(double dt) override;
 
-    void regualTriangualtion(int n, int m, float r, bool doTriangulateDelaunay);
-    // void regualTriangualtion(int n, int m, float r);
-    void randomTriangulation(int n, float r);
-    void computation();
+    void makeRegualTriangualtion(int n, int m, float r, bool doTriangulateDelaunay);
+    void makeRandomTriangulation(int n, float r);
+
+    void computeStiffnessmatrix();
     int randomMinMax (int min, int max);
 
 };
