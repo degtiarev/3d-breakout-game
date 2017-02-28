@@ -26,9 +26,9 @@ private:
 
 public:
     Femobject():GMlib::TriangleFacets<float>(50) {}
-    // not on diagonal, that have adjacent edge
+    // get VectorArrays that are not on diagonal, that have adjacent edge
     GMlib::Vector<GMlib::Vector<float,2>,3> getVectorArrays (GMlib::TSEdge<float> *edge);
-    //
+    // get VectorArray if on diagonal
     GMlib::Vector<GMlib::Vector<float, 2>, 3> getVectorArray(GMlib::TSTriangle<float>* tr, Node *node);
     void updateHeight ( float h );
 

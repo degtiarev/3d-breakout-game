@@ -11,7 +11,7 @@ void Femobject::makeRegualTriangualtion(int n, int m, float r, bool switcher)
     //m - number of circles (number of rows)
     //r - radius
 
-    // start from internal circle
+    // start from external (boundary) circle
     auto start_pt = GMlib::Point<float,2>(0,0);
     this->insertAlways(start_pt);
 
@@ -180,7 +180,6 @@ void Femobject::updateHeight(float f)
 
 void Femobject::localSimulate(double dt)
 {
-
     if (forceSwitcher)
         force+=dt;
     else
@@ -197,10 +196,10 @@ void Femobject::localSimulate(double dt)
 
 }
 
-GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::getVectorArrays(GMlib::TSEdge<float>* edg)
+GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::getVectorArrays(GMlib::TSEdge<float>* edge)
 {
 
-    GMlib::Array<GMlib::TSTriangle<float>*> tr = edg->getTriangle();
+    GMlib::Array<GMlib::TSTriangle<float>*> tr = edge->getTriangle();
 
     GMlib::Array<GMlib::TSVertex<float>*>   v1 = tr[0]->getVertices();
     GMlib::Array<GMlib::TSVertex<float>*>   v2 = tr[1]->getVertices();
@@ -208,17 +207,17 @@ GMlib::Vector<GMlib::Vector<float, 2>, 3> Femobject::getVectorArrays(GMlib::TSEd
     GMlib::Vector<GMlib::Vector<float,2>,3> d; //output
     GMlib::Point<float,2> p0,p1,p2,p3;
 
-    p0 = edg->getFirstVertex()->getParameter();
-    p1 = edg->getLastVertex()->getParameter();
+    p0 = edge->getFirstVertex()->getParameter();
+    p1 = edge->getLastVertex()->getParameter();
 
     //p2
     for(int i=0;i<3;i++)
-        if(v1[i]!=edg->getFirstVertex() && v1[i]!=edg->getLastVertex())
+        if(v1[i]!=edge->getFirstVertex() && v1[i]!=edge->getLastVertex())
             p2 = v1[i]->getParameter();
 
     //p3
     for(int i=0;i<3;i++)
-        if(v2[i]!=edg->getFirstVertex() && v2[i]!=edg->getLastVertex())
+        if(v2[i]!=edge->getFirstVertex() && v2[i]!=edge->getLastVertex())
             p3 = v2[i]->getParameter();
 
 
