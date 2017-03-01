@@ -118,7 +118,7 @@ void Simulator::setupSimulator()
 
 
     myFemObject1 = new Femobject();
-    myFemObject1->makeRandomTriangulation(30, 5);
+    myFemObject1->makeRandomTriangulation(50, 5);
     myFemObject1->computeStiffnessmatrix();
     myFemObject1->updateHeight(1);
     myFemObject1->toggleDefaultVisualizer();
