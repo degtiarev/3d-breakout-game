@@ -46,6 +46,9 @@ signals:
 private:
   static std::unique_ptr<GuiApplication>      _instance;
   void                                         planeUp();
+  void                                         planeDown();
+  void                                         planeLeft();
+  void                                         planeRight();
 
 public:
   static const GuiApplication&                instance();

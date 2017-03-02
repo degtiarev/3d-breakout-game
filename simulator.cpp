@@ -111,7 +111,13 @@ void Simulator::setupSimulator()
                              GMlib::Vector<float,3>(0.0f, 0.0f, -20.0f))); */
     //  ************************************************************************
 
+    _planes.push_back(std::make_unique<Plane>
+                      (GMlib::Point<float,3>(0.0f, 0.0f, 35.0f),
+                       GMlib::Vector<float,3>(7.0f, 0.0f, 0.0f),
+                       GMlib::Vector<float,3>(0.0f, 5.0f, 0.0f)));
 
+
+    _controll_plane= (_planes.at(0).get());
 
 
     _cubes.push_back(std::make_unique<Cuboid>(0 ,0 ,0 ,30 ,20 , 60 ,GMlib::GMmaterial::brass(), false, INT_MAX));
@@ -129,13 +135,9 @@ void Simulator::setupSimulator()
     _dspheres.push_back(std::make_unique<DynSphere> ());
     _dspheres.back()->setRadius(2.5);
     _dspheres.back()->translateGlobal(GMlib::Vector<float,3> (0.0f, 0.0f, 10.0f));
-    _dspheres.back()->velocity=GMlib::Vector<double,3> (0.0f, 0.0f, -20.0f);
+    _dspheres.back()->velocity=GMlib::Vector<double,3> (0.0f, 0.0f, -40.0f);
     _dspheres.back()->setMaterial(GMlib::GMmaterial::blackPlastic());
 
-    _planes.push_back(std::make_unique<Plane>
-                      (GMlib::Point<float,3>(0.0f, 0.0f, 35.0f),
-                       GMlib::Vector<float,3>(5.0f, 0.0f, 0.0f),
-                       GMlib::Vector<float,3>(0.0f, 5.0f, 0.0f)));
 
 
     //    _planes.push_back(std::make_unique<Plane>

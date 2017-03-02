@@ -97,7 +97,10 @@ GuiApplication::afterOnSceneGraphInitialized() {
   connect( &_window, &Window::signMouseReleased,      &_hidmanager, &StandardHidManager::registerMouseReleaseEvent );
   connect( &_window, &Window::signWheelEventOccurred, &_hidmanager, &StandardHidManager::registerWheelEvent );
 
-  connect (&_hidmanager, &DefaultHidManager::signGoUp, this, &GuiApplication::planeUp, Qt::DirectConnection);
+  connect (&_hidmanager, &DefaultHidManager::signGoUp,    this, &GuiApplication::planeUp, Qt::DirectConnection);
+  connect (&_hidmanager, &DefaultHidManager::signGoDown,  this, &GuiApplication::planeDown, Qt::DirectConnection);
+  connect (&_hidmanager, &DefaultHidManager::signGoLeft,  this, &GuiApplication::planeLeft, Qt::DirectConnection);
+  connect (&_hidmanager, &DefaultHidManager::signGoRight, this, &GuiApplication::planeRight, Qt::DirectConnection);
 
   // Handle HID OpenGL actions; needs to have the OGL context bound;
   // QQuickWindow's beforeRendering singnal provides that on a DirectConnection
@@ -129,6 +132,21 @@ GuiApplication::afterOnSceneGraphInitialized() {
 void GuiApplication::planeUp()
 {
     _scenario.planeUp();
+}
+
+void GuiApplication::planeDown()
+{
+    _scenario.planeDown();
+}
+
+void GuiApplication::planeLeft()
+{
+    _scenario.planeLeft();
+}
+
+void GuiApplication::planeRight()
+{
+    _scenario.planeRight();
 }
 
 const GuiApplication& GuiApplication::instance() {  return *_instance; }

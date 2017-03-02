@@ -476,6 +476,21 @@ void DefaultHidManager::heGoUp()
     emit signGoUp();
 }
 
+void DefaultHidManager::heGoDown()
+{
+    emit signGoDown();
+}
+
+void DefaultHidManager::heGoLeft()
+{
+    emit signGoLeft();
+}
+
+void DefaultHidManager::heGoRight()
+{
+    emit signGoRight();
+}
+
 Camera* DefaultHidManager::findCamera( const QString& view_name ) const {
 
   return _gmlib->camera(view_name).get();
@@ -661,6 +676,26 @@ void DefaultHidManager::setupDefaultHidBindings() {
                              "Plane up",
                              this, SLOT(heGoUp()), OGL_TRIGGER);
 
+  // Plane up
+  QString ha_id_control_down =
+          registerHidAction( "Controls",
+                             "Plane down",
+                             "Plane down",
+                             this, SLOT(heGoDown()), OGL_TRIGGER);
+
+  // Plane up
+  QString ha_id_control_left =
+          registerHidAction( "Controls",
+                             "Plane left",
+                             "Plane left",
+                             this, SLOT(heGoLeft()), OGL_TRIGGER);
+
+  // Plane up
+  QString ha_id_control_right =
+          registerHidAction( "Controls",
+                             "Plane right",
+                             "Plane right",
+                             this, SLOT(heGoRight()), OGL_TRIGGER);
 
 
   //// Set up initial mapping
@@ -689,6 +724,9 @@ void DefaultHidManager::setupDefaultHidBindings() {
   registerHidMapping( ha_id_view_zoom,                    new WheelInput() );
 
   registerHidMapping( ha_id_control_up,                   new KeyPressInput( Qt::Key_Up ) );
+  registerHidMapping( ha_id_control_down,                 new KeyPressInput( Qt::Key_Down ) );
+  registerHidMapping( ha_id_control_left,                 new KeyPressInput( Qt::Key_Left ) );
+  registerHidMapping( ha_id_control_right,                new KeyPressInput( Qt::Key_Right ) );
 }
 
 void DefaultHidManager::init(GMlibWrapper& gmlib) {

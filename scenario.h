@@ -21,6 +21,9 @@ public:
     void    cleanupScenario() override;
 
     void planeUp();
+    void planeDown();
+    void planeLeft();
+    void planeRight();
 
 private: std::shared_ptr <Simulator> _simulator;
 

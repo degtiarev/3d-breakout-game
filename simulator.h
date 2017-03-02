@@ -6,6 +6,7 @@
 #include <vector>
 #include "cuboid.h"
 #include "cubematrix.h"
+#include <typeinfo>
 
 #include <gmSceneModule>
 
@@ -74,8 +75,9 @@ void Simulator::prepareAndInsert(const std::unique_ptr<T>& obj, int m1, int m2, 
     _scene.insert(obj.get());
     _controller.add(obj.get());
 
-    GMlib::Array<GMlib::Visualizer*> &visus = obj->getVisualizers();
-    for( int i = 0; i < visus.getSize(); i++ ) visus[i]->toggleDisplayMode();
+   if (typeid(obj)!=typeid(std::make_unique<DynSphere> ()))
+    {GMlib::Array<GMlib::Visualizer*> &visus = obj->getVisualizers();
+    for( int i = 0; i < visus.getSize(); i++ ) visus[i]->toggleDisplayMode();}
 
 }
 

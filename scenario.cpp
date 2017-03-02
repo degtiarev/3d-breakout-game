@@ -103,3 +103,18 @@ void Scenario::planeUp()
 {
     _simulator->_controll_plane->moveUp();
 }
+
+void Scenario::planeDown()
+{
+    _simulator->_controll_plane->moveDown();
+}
+
+void Scenario::planeLeft()
+{
+    _simulator->_controll_plane->moveLeft();
+}
+
+void Scenario::planeRight()
+{
+    _simulator->_controll_plane->moveRight();
+}
