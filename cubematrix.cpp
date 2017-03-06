@@ -36,7 +36,6 @@ CubeMatrix::CubeMatrix(int height, int width, int depth, double startX, double s
                 int element =  i + depth * (j + width * k);
                 array3D[element] = std::make_unique<Cuboid> (currentX, currentY, currentZ, a, color, element);
 
-
                 currentX+=a;
 
             }

@@ -47,8 +47,6 @@ class Cuboid : public GMlib::SceneObject {
 
     ~Cuboid();
 
-    void create();
-
     std::vector<std::shared_ptr<collision::StaticPPlane> > getPlanes() const;
 
     bool getIsExist() const;

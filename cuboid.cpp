@@ -65,7 +65,6 @@ Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib
 
     for ( auto& plane : planes)
     {
-
         plane->setId(id);
         plane->toggleDefaultVisualizer();
         plane->replot();
@@ -76,13 +75,8 @@ Cuboid::Cuboid(double x, double y, double z, double a, double b, double c, GMlib
 }
 
 
-void Cuboid::create() {
-
-}
-
 Cuboid::~Cuboid() {
 
-    // if(_cube) remove(_cube.get());
     std::cout<<"destructor";
 }
 
@@ -90,10 +84,6 @@ std::vector<std::shared_ptr<collision::StaticPPlane> > Cuboid::getPlanes() const
 {
     return planes;
 }
-
-
-
-
 
 bool Cuboid::getIsExist() const
 {

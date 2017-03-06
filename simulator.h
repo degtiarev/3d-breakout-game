@@ -48,12 +48,12 @@ public:
 
     void setupSimulator();
 
-     collision::StaticPhysObject<GMlib::PPlane<float>>* _controll_plane;
+    collision::StaticPhysObject<GMlib::PPlane<float>>* _controll_plane;
 
 private:
 
     GMlib::Scene& _scene;
-    collision::collision_controller   _controller;
+    collision::MyController   _controller;
     PlaneVector _planes;
     DynSphereVector _dspheres;
     CubeVector _cubes;
@@ -62,8 +62,6 @@ private:
     void prepareAndInsert (const std::unique_ptr<T>& obj, int m1, int m2, int d1, int d2);
     template<typename T>
     void prepareAndInsert (const std::shared_ptr<T>& obj, int m1, int m2, int d1, int d2);
-
-
 
 };
 
@@ -75,9 +73,9 @@ void Simulator::prepareAndInsert(const std::unique_ptr<T>& obj, int m1, int m2, 
     _scene.insert(obj.get());
     _controller.add(obj.get());
 
-   if (typeid(obj)!=typeid(std::make_unique<DynSphere> ()))
+    if (typeid(obj)!=typeid(std::make_unique<DynSphere> ()))
     {GMlib::Array<GMlib::Visualizer*> &visus = obj->getVisualizers();
-    for( int i = 0; i < visus.getSize(); i++ ) visus[i]->toggleDisplayMode();}
+        for( int i = 0; i < visus.getSize(); i++ ) visus[i]->toggleDisplayMode();}
 
 }
 
